@@ -1,14 +1,14 @@
 import functools
 
-from pytorch_lightning import LightningDataModule
+from pytorch_lightning import LightningDataModule   # 把ML的轮子结构化了，这里是数据模块
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import ConcatDataset
 from torch.utils.data.distributed import DistributedSampler
 
-from . import _datamodules
+from . import _datamodules  # 单下划线表示为内部变量，为私有变量，_datamodules在__init__.py中定义，是一个字典，包含了三个数据集的模块
 
 
-class MTDataModule(LightningDataModule):
+class MTDataModule(LightningDataModule):    # 继承LightningDataModule，用于数据加载
     def __init__(self, _config, dist=False):
         datamodule_keys = _config["datasets"]
         assert len(datamodule_keys) > 0
@@ -16,7 +16,7 @@ class MTDataModule(LightningDataModule):
         super().__init__()
 
         self.dm_keys = datamodule_keys
-        self.dm_dicts = {key: _datamodules[key](_config) for key in datamodule_keys}
+        self.dm_dicts = {key: _datamodules[key](_config) for key in datamodule_keys}    # _datamodules[key](_config)是一个数据类,_config是参数
         self.dms = [v for k, v in self.dm_dicts.items()]
 
         self.batch_size = self.dms[0].batch_size

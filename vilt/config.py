@@ -1,4 +1,4 @@
-from sacred import Experiment
+from sacred import Experiment # 辅助实验框架
 
 ex = Experiment("ViLT")
 
@@ -20,7 +20,7 @@ def _loss_names(d):
     return ret
 
 
-@ex.config
+@ex.config  # 被sacred收集可在任意函数使用的变量
 def config():
     exp_name = "vilt"
     seed = 0
@@ -62,7 +62,7 @@ def config():
     # Text Setting
     vqav2_label_size = 3129
     max_text_len = 40
-    tokenizer = "bert-base-uncased"
+    tokenizer = "./bert-base-uncased"
     vocab_size = 30522
     whole_word_masking = False
     mlm_prob = 0.15

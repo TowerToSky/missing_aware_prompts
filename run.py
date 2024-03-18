@@ -10,7 +10,8 @@ from vilt.datamodules.multitask_datamodule import MTDataModule
 
 @ex.automain
 def main(_config):
-    _config = copy.deepcopy(_config)
+    print(os.getcwd())
+    _config = copy.deepcopy(_config)    # 深拷贝对象，内存地址完全不同，确保所有对象都是独立的
     pl.seed_everything(_config["seed"])
 
     dm = MTDataModule(_config, dist=True)
@@ -59,7 +60,7 @@ def main(_config):
         max_steps=max_steps,
         callbacks=callbacks,
         logger=logger,
-        prepare_data_per_node=False,
+        # prepare_data_per_node=False,
         replace_sampler_ddp=False,
         accumulate_grad_batches=grad_steps,
         log_every_n_steps=10,

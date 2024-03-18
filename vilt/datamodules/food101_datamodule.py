@@ -5,7 +5,7 @@ from collections import defaultdict
 
 class FOOD101DataModule(BaseDataModule):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)   # 调用父类BaseDataModule的初始化函数
 
     @property
     def dataset_cls(self):

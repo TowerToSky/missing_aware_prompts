@@ -1,0 +1,11 @@
+/result
+
+/bert-base-uncased
+
+*.arrow
+
+*.pt
+
+__pycache__
+
+

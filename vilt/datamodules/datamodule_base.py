@@ -9,15 +9,15 @@ from transformers import (
 )
 
 
-def get_pretrained_tokenizer(from_pretrained):
-    if torch.distributed.is_initialized():
+def get_pretrained_tokenizer(from_pretrained):  # 用于获取bert的tokenizer，
+    if torch.distributed.is_initialized():  # 在分布式环境下，确保只在主进程中加载tokenizer，保持一致性，节省资源
         if torch.distributed.get_rank() == 0:
             BertTokenizer.from_pretrained(
                 from_pretrained, do_lower_case="uncased" in from_pretrained
             )
         torch.distributed.barrier()
     return BertTokenizer.from_pretrained(
-        from_pretrained, do_lower_case="uncased" in from_pretrained
+        from_pretrained, do_lower_case="uncased" in from_pretrained, locals_only=True
     )
 
 
